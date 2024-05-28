@@ -804,3 +804,32 @@ interface ClassAdapter {
      */
     fun adapt(element: Element) : Element
 }
+
+operator fun Element.div(list: List<Element>) : Element {
+    list.forEach {
+        addElement(it)
+    }
+    return this
+}
+
+operator fun Element.div(element: Element) : Element  {
+    addElement(element)
+    return this
+}
+
+operator fun Element.div(name: String) : Element  {
+    addElement(name)
+    return this
+}
+
+operator fun Element.invoke(list: List<Attribute>) : Element  {
+    list.forEach {
+        addAttribute(it)
+    }
+    return this
+}
+
+operator fun Element.invoke(attribute: Attribute) : Element  {
+    addAttribute(attribute)
+    return this
+}

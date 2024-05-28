@@ -1,6 +1,7 @@
 package com.rdlp.xml.api
 
-import org.junit.jupiter.api.Assertions
+import com.rdlp.xml.api.annotations.*
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import java.io.File
 
@@ -12,7 +13,7 @@ class XMLapiTest {
         doc.setRootElement(plano)
         Element(plano, "curso", "Mestrado em Engenharia Informática")
         print(doc.toText(false))
-        Assertions.assertEquals(
+        assertEquals(
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<plano>\n\t<curso>Mestrado em Engenharia Informática</curso>\n</plano>\n",
             doc.toText(false)
         )
@@ -25,7 +26,7 @@ class XMLapiTest {
         doc.setRootElement(plano)
         Element(plano, "curso", "Mestrado em Engenharia Informática")
         print(doc.toText(false))
-        Assertions.assertEquals(
+        assertEquals(
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<plano>\n\t<curso>Mestrado em Engenharia Informática</curso>\n</plano>\n",
             doc.toText(false)
         )
@@ -39,7 +40,7 @@ class XMLapiTest {
         Element(plano, "curso", "Mestrado em Engenharia Informática")
         doc.removeRootElement()
         print(doc.toText(false))
-        Assertions.assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n", doc.toText(false))
+        assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n", doc.toText(false))
     }
 
     @Test
@@ -50,7 +51,7 @@ class XMLapiTest {
         Element(plano, "curso", "Mestrado em Engenharia Informática")
         doc.renameElementsByName("curso", "cur")
         print(doc.toText(false))
-        Assertions.assertEquals(
+        assertEquals(
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<plano>\n\t<cur>Mestrado em Engenharia Informática</cur>\n</plano>\n",
             doc.toText(false)
         )
@@ -64,7 +65,7 @@ class XMLapiTest {
         Element(plano, "fuc")
         doc.addAttributeToElement("fuc", "codigo", "M4310")
         print(doc.toText(false))
-        Assertions.assertEquals(
+        assertEquals(
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<plano>\n\t<fuc codigo=\"M4310\"/>\n</plano>\n",
             doc.toText(false)
         )
@@ -79,7 +80,7 @@ class XMLapiTest {
         fuc2.addAttribute("codigo", "03782")
         doc.renameAttributesByName("fuc", "codigo", "codig")
         print(doc.toText(false))
-        Assertions.assertEquals(
+        assertEquals(
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<plano>\n\t<fuc codig=\"03782\"/>\n</plano>\n",
             doc.toText(false)
         )
@@ -93,7 +94,7 @@ class XMLapiTest {
         Element(plano, "fuc")
         doc.removeElementByName("fuc")
         print(doc.toText(false))
-        Assertions.assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<plano/>\n", doc.toText(false))
+        assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<plano/>\n", doc.toText(false))
     }
 
     @Test
@@ -105,7 +106,7 @@ class XMLapiTest {
         fuc2.addAttribute("codigo", "03782")
         doc.removeAttributeByName("fuc", "codigo")
         print(doc.toText(false))
-        Assertions.assertEquals(
+        assertEquals(
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<plano>\n\t<fuc/>\n</plano>\n",
             doc.toText(false)
         )
@@ -117,7 +118,7 @@ class XMLapiTest {
         val plano = Element(name = "plano")
         val fuc2 = Element(plano, "fuc")
         doc.setRootElement(plano)
-        Assertions.assertEquals(listOf(fuc2), doc.getElementsByPath("fuc"))
+        assertEquals(listOf(fuc2), doc.getElementsByPath("fuc"))
     }
 
     @Test
@@ -132,7 +133,7 @@ class XMLapiTest {
             throw AssertionError("Assertion failed")
         } else {
             print(file.readText())
-            Assertions.assertEquals(
+            assertEquals(
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<plano>\n\t<fuc/>\n</plano>\n",
                 file.readText()
             )
@@ -145,7 +146,7 @@ class XMLapiTest {
         val plano = Element(name = "plano")
         val fuc2 = Element(plano, "fuc")
         doc.setRootElement(plano)
-        Assertions.assertEquals("plano/fuc", fuc2.path)
+        assertEquals("plano/fuc", fuc2.path)
     }
 
     @Test
@@ -154,7 +155,7 @@ class XMLapiTest {
         val plano = Element(name = "plano")
         doc.setRootElement(plano)
         Element(plano, "curso", "Mestrado em Engenharia Informática")
-        Assertions.assertEquals(
+        assertEquals(
             "<plano>\n\t<curso>Mestrado em Engenharia Informática</curso>\n</plano>\n",
             plano.toText(color = false, identation = true, newline = true)
         )
@@ -168,7 +169,7 @@ class XMLapiTest {
         val fuc = Element(plano, "fuc")
         fuc.addAttribute("codigo", "M4310")
         fuc.addAttribute(Attribute("nome","Programação Avançada"))
-        Assertions.assertEquals(
+        assertEquals(
             "<plano>\n\t<fuc codigo=\"M4310\" nome=\"Programação Avançada\"/>\n</plano>\n",
             plano.toText(color = false, identation = true, newline = true)
         )
@@ -184,7 +185,7 @@ class XMLapiTest {
         fuc.addAttribute(Attribute("nome","Programação Avançada"))
         fuc.removeAttribute("codigo")
         fuc.removeAttribute(Attribute("nome","Programação Avançada"))
-        Assertions.assertEquals(
+        assertEquals(
             "<plano>\n\t<fuc/>\n</plano>\n",
             plano.toText(color = false, identation = true, newline = true)
         )
@@ -198,7 +199,7 @@ class XMLapiTest {
         val curso = Element(name="curso",text="Mestrado em Engenharia Informática")
         plano.addElement(curso)
         Element(plano,"fuc", attributes = listOf(Attribute("codigo", "M4310")))
-        Assertions.assertEquals(
+        assertEquals(
             "<plano>\n\t<curso>Mestrado em Engenharia Informática</curso>\n\t<fuc codigo=\"M4310\"/>\n</plano>\n",
             plano.toText(color = false, identation = true, newline = true)
         )
@@ -214,7 +215,7 @@ class XMLapiTest {
         Element(plano,"fuc", attributes = listOf(Attribute("codigo", "M4310")))
         plano.removeElement(curso)
         plano.removeElement("fuc")
-        Assertions.assertEquals("<plano/>", plano.toText(false, identation = false, newline = false))
+        assertEquals("<plano/>", plano.toText(false, identation = false, newline = false))
     }
 
     @Test
@@ -225,7 +226,7 @@ class XMLapiTest {
         val fuc = Element(plano, "fuc")
         fuc.addAttribute("codigo", "M4310")
         fuc.changeAttribute("codigo", "A4545")
-        Assertions.assertEquals(
+        assertEquals(
             "<plano>\n\t<fuc codigo=\"A4545\"/>\n</plano>\n",
             plano.toText(color = false, identation = true, newline = true)
         )
@@ -234,7 +235,7 @@ class XMLapiTest {
     @Test
     fun attributeToTextTest() {
         val attr = Attribute("codigo", "M4310")
-        Assertions.assertEquals("codigo=\"M4310\"", attr.toText(false))
+        assertEquals("codigo=\"M4310\"", attr.toText(false))
     }
 
     @Test
@@ -242,9 +243,69 @@ class XMLapiTest {
         val attr = Attribute("codigo", "M4310")
         val fuc = Element(name="fuc")
         attr.setElement(fuc)
-        Assertions.assertEquals(
+        assertEquals(
             "<fuc codigo=\"M4310\"/>\n",
             fuc.toText(color = false, identation = true, newline = true)
         )
+    }
+
+    class AddPercentage : TextFormatter {
+        override fun textFormat(text: String): String {
+            return "$text%"
+        }
+    }
+
+    class FucAdapter : ClassAdapter {
+        override fun adapt(element: Element): Element {
+            val avalicao = element.children[2]
+            val componentes = avalicao.children.toList()
+            element.removeElement(avalicao)
+            componentes.forEach { element.addElement(it) }
+            return element
+        }
+    }
+
+    @XmlElement("componente")
+    class ComponenteAvaliacao(
+        @XmlAttribute
+        val nome: String,
+        @XmlAttribute
+        @XmlString(AddPercentage::class)
+        val peso: Int
+    )
+
+    @XmlElement("fuc")
+    @XmlAdapter(FucAdapter::class)
+    class FUC(
+        @XmlAttribute
+        val codigo: String,
+        @XmlElement
+        val nome: String,
+        @XmlElement
+        val ects: Double,
+        @XmlExclude
+        val observacoes: String,
+        @XmlElement
+        val avaliacao: List<ComponenteAvaliacao>
+    )
+
+    @Test
+    fun annotationTest() {
+        val f1 = FUC("M4310", "Programação Avançada", 6.0, "la la...",
+            listOf(
+                ComponenteAvaliacao("Quizzes", 20),
+                ComponenteAvaliacao("Projeto", 80)
+            )
+        )
+
+        val element = Element.fromAnnotation(f1)
+
+        assertEquals("<fuc codigo=\"M4310\">\n" +
+                "\t<nome>Programação Avançada</nome>\n" +
+                "\t<ects>6.0</ects>\n" +
+                "\t<componente nome=\"Quizzes\" peso=\"20%\"/>\n" +
+                "\t<componente nome=\"Projeto\" peso=\"80%\"/>\n" +
+                "</fuc>\n",
+            element.toText(false, identation = true, newline = true))
     }
 }
