@@ -114,32 +114,3 @@ fun plano() {
 
     print(doc.toText(color = false))
 }
-
-fun biblioteca() {
-    val doc = Document()
-    val bookstoreelement = Element(name = "bookstore")
-    doc.setRootElement(bookstoreelement)
-
-    val book1 = Element(parentelement = bookstoreelement, name = "book")
-    book1.addAttribute("category", "cooking")
-    book1.addElement(name = "title", text = "Everyday Italian", attributelist = listOf(Attribute("lang", "en")))
-    book1.addElement(name = "author", text = "Giada De Laurentiis")
-    book1.addElement(name = "year", text = "2005")
-    book1.addElement(name = "price", text = "30.00")
-
-    val book2 = Element(parentelement = bookstoreelement, name = "book")
-    book2.addAttribute("category", "children")
-    book2.addElement(name = "title", text = "Harry Potter", attributelist = listOf(Attribute("lang", "en")))
-    book2.addElement(name = "author", text = "J K. Rowling")
-    book2.addElement(name = "year", text = "2005")
-    book2.addElement(name = "price", text = "29.99")
-
-    val book3 = Element(parentelement = bookstoreelement, name = "book")
-    book3.addAttribute("category", "web")
-    book3.addElement(name = "title", text = "Learning XML", attributelist = listOf(Attribute("lang", "en")))
-    book3.addElement(name = "author", text = "Erik T. Ray")
-    book3.addElement(name = "year", text = "2003")
-    book3.addElement(name = "price", text = "39.95")
-
-    //print(doc.toText)
-}

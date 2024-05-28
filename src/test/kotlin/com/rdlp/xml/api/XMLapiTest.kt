@@ -308,4 +308,27 @@ class XMLapiTest {
                 "</fuc>\n",
             element.toText(false, identation = true, newline = true))
     }
+
+    @Test
+    fun dslTest() {
+        val f1 =
+            Element(name = "fuc") (Attribute(name = "codigo", value = "M4310")) / listOf(
+                Element(name = "nome", text = "Programação Avançada"),
+                Element(name = "ects", text = "6.0"),
+                Element(name = "avaliacao") / listOf(
+                    Element(name = "componente") (listOf(Attribute("nome", "Quizzes"), Attribute("peso", "20"))),
+                    Element(name = "componente") (listOf(Attribute("nome", "Projeto"), Attribute("peso", "80")))
+                )
+            )
+
+        assertEquals("<fuc codigo=\"M4310\">\n" +
+                "\t<nome>Programação Avançada</nome>\n" +
+                "\t<ects>6.0</ects>\n" +
+                "\t<avaliacao>\n" +
+                "\t\t<componente nome=\"Quizzes\" peso=\"20\"/>\n" +
+                "\t\t<componente nome=\"Projeto\" peso=\"80\"/>\n" +
+                "\t</avaliacao>\n" +
+                "</fuc>\n",
+            f1.toText(false, identation = true, newline = true))
+    }
 }
