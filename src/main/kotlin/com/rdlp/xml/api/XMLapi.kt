@@ -432,7 +432,7 @@ class Element(parentelement: Element? = null, name: String, text: String = "", a
         while (iterator.hasNext()) {
             val child = iterator.next()
             if (child.name == attributename) {
-                child.setElement(null)
+                child.element = null
                 iterator.remove()
             }
         }
@@ -448,7 +448,7 @@ class Element(parentelement: Element? = null, name: String, text: String = "", a
         while (iterator.hasNext()) {
             val child = iterator.next()
             if (child == attribute) {
-                child.setElement(null)
+                child.element = null
                 iterator.remove()
             }
         }
@@ -686,7 +686,11 @@ class Attribute (
      * The [Element] that the [Attribute] belongs to
      */
     var element: Element? = element
-        private set
+        set(element) {
+            this.element?.removeAttribute(this)
+            element?.addAttribute(this)
+            field = element
+        }
 
     /**
      * The [name] of the XML [Attribute]
@@ -744,16 +748,6 @@ class Attribute (
             str += reset
 
         return str
-    }
-
-    /**
-     * Sets the [Element] that the [Attribute] belongs to
-     *
-     * @param element the [Element] that the [Attribute] will belong to
-     */
-    fun setElement(element: Element?) {
-        this.element?.removeAttribute(this)
-        element?.addAttribute(this)
     }
 
     override fun equals(other: Any?): Boolean {

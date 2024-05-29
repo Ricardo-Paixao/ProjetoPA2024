@@ -242,7 +242,7 @@ class XMLapiTest {
     fun attributeSetElementTest() {
         val attr = Attribute("codigo", "M4310")
         val fuc = Element(name="fuc")
-        attr.setElement(fuc)
+        attr.element = fuc
         assertEquals(
             "<fuc codigo=\"M4310\"/>\n",
             fuc.toText(color = false, identation = true, newline = true)
