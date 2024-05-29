@@ -105,6 +105,17 @@ document.toFile(directorypath = "./output")
 - XmlAdapter
   - Specifies an adapter for a class to adapt it after mapping.
 
+### Internal DSL
+
+- root / element
+  - Adds the XML element to the root.
+- root / listOf(element1, element2)
+  - Adds the XML elements to the root.
+- element (attribute)
+  - Adds the XML attribute to the element.
+- element(listOf(attribute1, attribute2))
+  - Adds the XML attributes to the element.
+
 ## Examples
 
 ### Example 1: Creating a Simple XML Document
@@ -138,6 +149,22 @@ val element = Element.fromAnnotation(person)
 
 val document = Document()
 document.setRootElement(element)
+
+println(document.toText())
+```
+
+### Example 3: Generating XML using Internal DSL
+
+```kotlin
+val document = Document()
+val root = Element(name = "library")
+document.setRootElement(root)
+
+val book = Element(name = "book", text = "Kotlin Programming")
+
+val author = Attribute(name = "author", value = "John Doe")
+
+root / book (author)
 
 println(document.toText())
 ```
